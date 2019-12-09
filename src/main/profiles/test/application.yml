@@ -1,0 +1,40 @@
+#
+server:
+  port: 7100
+#
+logging:
+  config: classpath:logback.xml
+#
+spring:
+  application:
+    name: study-springcloud-eureka
+#########################
+#（★）Eureka Server
+#########################
+eureka:
+  #（1）实例配置
+  instance:
+    #hostname: 127.0.0.1
+    #该服务实例向注册中心发送心跳间隔（s），默认30
+    lease-renewal-interval-in-seconds: 30
+    #lease-expiration-duration-in-seconds: 15
+    #
+    prefer-ip-address: true
+  #（2）客户端配置
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_SERVER_LIST}
+  #（3）服务端配置
+  server:
+    #清除无效服务实例的时间间隔（ms），默认60000
+    eviction-interval-timer-in-ms: 60000
+    #启用自我保护机制，默认为true
+    enable-self-preservation: false
+    #（续约相关）更新续约阈值的间隔（ms），默认15分钟
+    renewal-threshold-update-interval-ms: 10000
+    #15分钟内续约服务的比例小于0.85，则开启自我保护机制，在此期间不会清除已注册的任何服务（即便是无效服务）
+    renewal-percent-threshold: 0.85
+    #
+    expected-client-renewal-interval-seconds: 60
